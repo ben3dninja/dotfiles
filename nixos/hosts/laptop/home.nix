@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "ben";
@@ -23,6 +25,12 @@
     # pkgs.hello
     gh
     helix
+    rust-analyzer
+    nil
+    neofetch
+    alacritty
+
+    (nerdfonts.override {fonts = ["FiraCode"];})
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -73,11 +81,26 @@
     # EDITOR = "emacs";
   };
 
+  fonts.fontconfig.enable = true;
+  
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   programs.git = {
     enable = true;
     userName = "ben3dninja";
     userEmail = "benjamin.lagosanto@gmail.com";
+  };
+  programs.helix = {
+    enable = true;
+    defaultEditor = true;
+    languages = {
+      language = [
+        {
+          name = "nix";
+          formatter = {command = "alejandra";};
+        }
+      ];
+    };
   };
 }

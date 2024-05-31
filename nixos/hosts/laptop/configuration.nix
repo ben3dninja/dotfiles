@@ -50,13 +50,15 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
+  services.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
 
+  services.displayManager.sddm.autoNumlock = true;
+
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "fr";
-    xkbVariant = "";
+    variant = "";
   };
 
   # Configure console keymap
@@ -102,6 +104,7 @@
     users = {
       "ben" = import ./home.nix;
     };
+    backupFileExtension = "backup";
   };
 
   # Allow unfree packages
@@ -144,5 +147,12 @@
   system.stateVersion = "23.11"; # Did you read the comment?
   environment.variables = {
     EDITOR = "vim";
+  };
+  stylix = {
+    image = pkgs.fetchurl {
+      url = "https://www.pixelstalk.net/wp-content/uploads/images7/Purple-Galaxy-Wallpaper-High-Resolution.jpg";
+      sha256 = "5d40bdc2361d3d8dcc2d01e5de29a0cba6050fc2bfb06c9e582d07ac1aae8cef";
+    };
+    polarity = "dark";
   };
 }

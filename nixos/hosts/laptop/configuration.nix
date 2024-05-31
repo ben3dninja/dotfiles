@@ -101,10 +101,10 @@
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
+    backupFileExtension = "backup";
     users = {
       "ben" = import ./home.nix;
     };
-    backupFileExtension = "backup";
   };
 
   # Allow unfree packages

@@ -30,8 +30,6 @@
     neofetch
     alacritty
 
-    (nerdfonts.override {fonts = ["FiraCode"];})
-
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -81,7 +79,16 @@
     # EDITOR = "emacs";
   };
 
-  fonts.fontconfig.enable = true;
+  # fonts.fontconfig.enable = true;
+  stylix = {
+    fonts = {
+    	monospace = {
+    		package = (pkgs.nerdfonts.override {fonts = ["FiraCode"];});
+    		name = "FiraCode";
+        };
+  	};
+  };
+
   
 
   # Let Home Manager install and manage itself.

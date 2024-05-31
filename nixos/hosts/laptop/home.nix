@@ -28,7 +28,7 @@
     rust-analyzer
     nil
     neofetch
-    alacritty
+    kitty
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -80,14 +80,6 @@
   };
 
   # fonts.fontconfig.enable = true;
-  stylix = {
-    fonts = {
-    	monospace = {
-    		package = (pkgs.nerdfonts.override {fonts = ["FiraCode"];});
-    		name = "FiraCode";
-        };
-  	};
-  };
 
   
 

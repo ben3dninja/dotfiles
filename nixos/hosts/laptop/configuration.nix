@@ -4,6 +4,9 @@
 
 { config, pkgs, inputs, ... }:
 
+let
+  firacode = pkgs.nerdfonts.override {fonts = ["FiraCode"];};
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -148,11 +151,20 @@
   environment.variables = {
     EDITOR = "vim";
   };
+  fonts = {
+    packages = [ firacode ];
+  };
   stylix = {
     image = pkgs.fetchurl {
       url = "https://www.pixelstalk.net/wp-content/uploads/images7/Purple-Galaxy-Wallpaper-High-Resolution.jpg";
       sha256 = "5d40bdc2361d3d8dcc2d01e5de29a0cba6050fc2bfb06c9e582d07ac1aae8cef";
     };
     polarity = "dark";
+    fonts = {
+    	monospace = {
+    		package = firacode;
+    		name = "FiraCode Nerd Font Mono Ret";
+        };
+  	};
   };
 }

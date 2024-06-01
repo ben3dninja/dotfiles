@@ -1,8 +1,11 @@
 {
   config,
   pkgs,
+  outputs,
   ...
 }: {
+  imports = [outputs.homeManagerModules.firefox];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "ben";
@@ -25,7 +28,6 @@
     # pkgs.hello
     gh
     helix
-    rust-analyzer
     nil
     neofetch
     kitty
@@ -81,8 +83,6 @@
 
   # fonts.fontconfig.enable = true;
 
-  
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   programs.git = {
@@ -97,7 +97,8 @@
       language = [
         {
           name = "nix";
-          formatter = {command = "alejandra";};
+          formatter.command = "alejandra";
+          auto-format = true;
         }
       ];
     };

@@ -1,18 +1,20 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, inputs, ... }:
-
-let
-  firacode = pkgs.nerdfonts.override {fonts = ["FiraCode"];};
-in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.default
-    ];
+  config,
+  pkgs,
+  inputs,
+  outputs,
+  ...
+}: let
+  firacode = pkgs.nerdfonts.override {fonts = ["FiraCode"];};
+in {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.default
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -22,7 +24,7 @@ in
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -94,20 +96,28 @@ in
   users.users.ben = {
     isNormalUser = true;
     description = "ben";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       firefox
       kate
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
+  # home-manager."ben" = {
+  #   extraSpecialArgs = { inherit inputs; };
+  #   backupFileExtension = "backup";
+  #   users = {
+  #     modules = [
+  #       ./home.nix
+  #       inputs.self.outputs.homeManagerModules.default
+  #     ];
+  #   };
+  # };
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = {inherit inputs outputs;};
     backupFileExtension = "backup";
-    users = {
-      "ben" = import ./home.nix;
-    };
+    users."ben" = import ./home.nix;
   };
 
   # Allow unfree packages
@@ -119,7 +129,7 @@ in
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     git
     alejandra
-  #  wget
+    #  wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -152,7 +162,7 @@ in
     EDITOR = "vim";
   };
   fonts = {
-    packages = [ firacode ];
+    packages = [firacode];
   };
   stylix = {
     image = pkgs.fetchurl {
@@ -161,10 +171,10 @@ in
     };
     polarity = "dark";
     fonts = {
-    	monospace = {
-    		package = firacode;
-    		name = "FiraCode Nerd Font Mono Ret";
-        };
-  	};
+      monospace = {
+        package = firacode;
+        name = "FiraCode Nerd Font Mono Ret";
+      };
+    };
   };
 }

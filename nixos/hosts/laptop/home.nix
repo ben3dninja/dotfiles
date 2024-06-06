@@ -3,7 +3,9 @@
   pkgs,
   outputs,
   ...
-}: {
+}: let
+  firacode = pkgs.nerdfonts.override {fonts = ["FiraCode"];};
+in {
   imports = [outputs.homeManagerModules.firefox];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -81,8 +83,6 @@
     # EDITOR = "emacs";
   };
 
-  # fonts.fontconfig.enable = true;
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   programs.git = {
@@ -101,6 +101,20 @@
           auto-format = true;
         }
       ];
+    };
+  };
+  programs.kitty.enable = true;
+
+  fonts.fontconfig.enable = true;
+
+  stylix = {
+    autoEnable = true;
+    targets.kitty.enable = true;
+    fonts = {
+      monospace = {
+        package = firacode;
+        name = "FiraCode Nerd Font Mono Ret";
+      };
     };
   };
 }

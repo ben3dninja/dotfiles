@@ -3,9 +3,11 @@
   pkgs,
   outputs,
   ...
-}: let
-  firacode = pkgs.nerdfonts.override {fonts = ["FiraCode"];};
-in {
+}:
+# let
+# firacode = pkgs.nerdfonts.override {fonts = ["FiraCode"];};
+# in
+{
   imports = [outputs.homeManagerModules.firefox];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -33,6 +35,8 @@ in {
     nil
     neofetch
     kitty
+    keepassxc
+    onedrive
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -102,6 +106,19 @@ in {
         }
       ];
     };
+    settings = {
+      editor = {
+        line-number = "relative";
+        lsp = {
+          display-messages = true;
+          display-inlay-hints = true;
+        };
+      };
+      keys.normal = {
+        space.w = ":w";
+        space.q = ":q";
+      };
+    };
   };
   programs.kitty.enable = true;
 
@@ -112,9 +129,15 @@ in {
     targets.kitty.enable = true;
     fonts = {
       monospace = {
-        package = firacode;
-        name = "FiraCode Nerd Font Mono Ret";
+        # package = firacode;
+        # name = "FiraCode Nerd Font Mono Ret";
+        package = pkgs.jetbrains-mono;
+        name = "JetBrains Mono";
       };
+    };
+    opacity = {
+      terminal = 0.85;
+      desktop = 0.85;
     };
   };
 }

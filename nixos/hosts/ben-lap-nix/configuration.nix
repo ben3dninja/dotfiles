@@ -53,11 +53,15 @@
   services.displayManager.defaultSession = "plasmax11";
   services.displayManager.sddm.autoNumlock = true;
 
+
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
+    layout = "fr";
     xkbVariant = "";
   };
+
+  # Configure console keymap
+  console.keyMap = "fr";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -101,15 +105,16 @@
     users."ben" = import ./home.nix;
   };
 
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     git 
-     gcc
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    git
+    gcc
   #  wget
   ];
 
@@ -132,6 +137,7 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -151,4 +157,5 @@
 
     polarity = "dark";
   };
+
 }

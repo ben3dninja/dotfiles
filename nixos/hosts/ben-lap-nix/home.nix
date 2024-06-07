@@ -142,4 +142,5 @@
       desktop = 0.85;
     };
   };
+  gtk.enable = false;
 }

@@ -2,9 +2,8 @@
   description = "Nixos config flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     stylix.url = "github:danth/stylix";
-    hyprland.url = "github:hyprwm/Hyprland";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -53,6 +52,23 @@
         })
       ];
     };
+    nixosConfigurations.ben-desk-nix = nixpkgs.lib.nixosSystem {
+      specialArgs = {inherit inputs outputs;};
+      modules = [
+        ./hosts/ben-desk-nix/configuration.nix
+        inputs.home-manager.nixosModules.default
+        inputs.stylix.nixosModules.stylix
+        ({pkgs, ...}: {
+          nixpkgs.overlays = [inputs.rust-overlay.overlays.default];
+          environment.systemPackages = [
+            (pkgs.rust-bin.stable.latest.default.override {
+              extensions = ["rust-src" "rust-analyzer" "clippy"];
+            })
+          ];
+        })
+      ];
+    };
+
     homeManagerModules = import ./homeManagerModules;
   };
 }

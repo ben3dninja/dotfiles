@@ -1,32 +1,22 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
+
+{ config, pkgs, inputs, outputs, ... }:
+
 {
-  config,
-  pkgs,
-  inputs,
-  outputs,
-  ...
-}:
-# let
-#   firacode = pkgs.nerdfonts.override {fonts = ["FiraCode"];};
-# in
-{
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    inputs.home-manager.nixosModules.default
-  ];
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      inputs.home-manager.nixosModules.default
+    ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -58,24 +48,22 @@
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
+  services.displayManager.defaultSession = "plasma";
+  services.displayManager.sddm.wayland.enable = true;
   services.displayManager.sddm.autoNumlock = true;
 
   # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "fr";
-    variant = "";
+  services.xserver = {
+    layout = "us";
+    xkbVariant = "";
   };
-
-  # Configure console keymap
-  console.keyMap = "fr";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -97,25 +85,17 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ben = {
     isNormalUser = true;
-    description = "ben";
-    extraGroups = ["networkmanager" "wheel"];
+    description = "Benjamin Lagosanto";
+    extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      firefox
       kate
-      #  thunderbird
+    #  thunderbird
     ];
   };
 
-  # home-manager."ben" = {
-  #   extraSpecialArgs = { inherit inputs; };
-  #   backupFileExtension = "backup";
-  #   users = {
-  #     modules = [
-  #       ./home.nix
-  #       inputs.self.outputs.homeManagerModules.default
-  #     ];
-  #   };
-  # };
+  # Install firefox.
+  programs.firefox.enable = true;
+
   home-manager = {
     extraSpecialArgs = {inherit inputs outputs;};
     backupFileExtension = "backup";
@@ -128,11 +108,10 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    git
-    alejandra
-    gcc
-    #  wget
+     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+     git 
+     gcc
+  #  wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -160,34 +139,16 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Did you read the comment?
+  
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   environment.variables = {
     EDITOR = "vim";
   };
-  # fonts = {
-  #   packages = [firacode];
-  # };
+
   stylix = {
     image = ./boat_sunset.jpg;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
 
     polarity = "dark";
-    # fonts = {
-    #   monospace = {
-    #     package = firacode;
-    #     name = "FiraCode Nerd Font Mono Ret";
-    #   };
-    # };
-  };
-
-#  # https://wiki.hyprland.org/Nix/Cachix/
-#  nix.settings = {
-#    substituters = ["https://hyprland.cachix.org"];
-#    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
-#  };
-#  # https://wiki.hyprland.org/Nix/Hyprland-on-NixOS/
-#  programs.hyprland = {
-#    enable = true;
-#    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-#  };
 }

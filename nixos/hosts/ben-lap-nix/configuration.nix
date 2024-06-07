@@ -57,9 +57,9 @@
   services.displayManager.sddm.autoNumlock = true;
 
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "fr";
-    xkbVariant = "";
+    variant = "";
   };
 
   # Configure console keymap

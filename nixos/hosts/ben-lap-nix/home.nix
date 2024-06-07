@@ -129,6 +129,7 @@
   stylix = {
     autoEnable = true;
     targets.kitty.enable = true;
+    targets.gtk.enable = false;
     fonts = {
       monospace = {
         # package = firacode;
@@ -142,5 +143,5 @@
       desktop = 0.85;
     };
   };
-  gtk.enable = false;
+  # gtk.enable = false;
 }

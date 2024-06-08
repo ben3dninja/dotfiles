@@ -24,6 +24,8 @@
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
+  nixpkgs.config.allowUnfree = true;
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
@@ -38,6 +40,8 @@
     kitty
     keepassxc
     bacon
+    obsidian
+    onedrivegui
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -68,6 +72,7 @@
     # '';
     ".config/onedrive/sync_list".text = ''
       Vault/Database.kdbx
+      obsidian
     '';
   };
 
@@ -102,6 +107,7 @@
     enable = true;
     defaultEditor = true;
     languages = {
+      language-server.rust-analyzer.config.check.command = "clippy";
       language = [
         {
           name = "nix";

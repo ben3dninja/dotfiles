@@ -37,7 +37,6 @@
     neofetch
     kitty
     keepassxc
-    onedrive
     bacon
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
@@ -67,6 +66,9 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+    ".config/onedrive/sync_list".text = ''
+      Vault/Database.kdbx
+    '';
   };
 
   # Home Manager can also manage your environment variables through

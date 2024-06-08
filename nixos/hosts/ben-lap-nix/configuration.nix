@@ -54,12 +54,14 @@
   services.desktopManager.plasma6.enable = true;
 
   services.displayManager.defaultSession = "plasmax11";
+  services.displayManager.sddm.wayland.enable = false;
   services.displayManager.sddm.autoNumlock = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "fr";
     variant = "";
+    options = "compose:menu";
   };
 
   # Configure console keymap
@@ -157,4 +159,6 @@
 
     polarity = "dark";
   };
+
+  services.onedrive.enable = true;
 }

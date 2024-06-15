@@ -36,6 +36,8 @@ in {
               (extension "ublock-origin" "uBlock0@raymondhill.net")
               (extension "darkreader" "addon@darkreader.org")
               (extension "keepassxc-browser" "keepassxc-browser@keepassxc.org")
+              (extension "plasma-integration" "plasma-browser-integration@kde.org")
+              (extension "startpage-private-search" "{20fc2e06-e3e4-4b2b-812b-ab431220cada}")
               # add extensions here...
             ];
 
@@ -50,6 +52,8 @@ in {
             };
             "extensions.pocket.enabled" = lock-false;
             "extensions.screenshots.disabled" = lock-true;
+            "browser.tabs.loadBookmarksInTabs" = lock-true;
+            "signon.rememberSignons" = lock-false;
             # add global preferences here...
           };
         };

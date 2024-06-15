@@ -41,7 +41,11 @@
     keepassxc
     bacon
     obsidian
-    onedrivegui
+    keymapp
+    libusb
+    plasma-browser-integration
+    discord
+    broot
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -123,6 +127,10 @@
           display-messages = true;
           display-inlay-hints = true;
         };
+        cursor-shape = {
+          insert = "bar";
+          normal = "block";
+        };
       };
       keys.normal = {
         space.w = ":w";
@@ -131,6 +139,10 @@
     };
   };
   programs.kitty.enable = true;
+  programs.broot = {
+    enable = true;
+    enableBashIntegration = true;
+  };
 
   fonts.fontconfig.enable = true;
 

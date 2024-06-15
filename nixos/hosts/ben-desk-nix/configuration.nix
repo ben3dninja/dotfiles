@@ -59,8 +59,9 @@
 
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "us";
+    layout = "us,fr";
     variant = "";
+    options = "grp:win_space_toggle";
   };
 
   # Enable CUPS to print documents.
@@ -89,7 +90,7 @@
   users.users.ben = {
     isNormalUser = true;
     description = "Benjamin Lagosanto";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "plugdev"];
     packages = with pkgs; [
       kate
       #  thunderbird
@@ -150,11 +151,15 @@
   };
 
   stylix = {
-    image = ./boat_sunset.jpg;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    image = ../../assets/solar_system.png;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-terminal-dark.yaml";
 
     polarity = "dark";
   };
 
-  services.onedrive.enable = true;
+  # services.onedrive.enable = true;
+
+  services.udev.extraRules = ''
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu"
+  '';
 }

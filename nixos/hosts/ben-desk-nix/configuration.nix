@@ -153,7 +153,6 @@
   stylix = {
     image = ../../assets/solar_system.png;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-terminal-dark.yaml";
-
     polarity = "dark";
   };
 

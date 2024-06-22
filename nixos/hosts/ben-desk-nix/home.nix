@@ -137,6 +137,10 @@
         space.q = ":q";
       };
     };
+    themes.stylix = {
+      "ui.virtual.inlay-hint" = {fg = "base03";};
+      "ui.cursor.primary" = {fg = "base09";};
+    };
   };
   programs.kitty.enable = true;
   programs.broot = {
@@ -159,8 +163,8 @@
       };
     };
     opacity = {
-      terminal = 0.85;
-      desktop = 0.85;
+      terminal = 0.9;
+      desktop = 0.9;
     };
   };
   # gtk.enable = false;

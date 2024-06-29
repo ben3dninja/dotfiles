@@ -161,4 +161,48 @@
   services.udev.extraRules = ''
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu"
   '';
+
+  services.syncthing = {
+    enable = true;
+    user = "ben";
+    dataDir = "/home/ben/syncthing_default";
+    configDir = "/home/ben/.config/syncthing";
+    overrideDevices = true;
+    overrideFolders = true;
+    settings = {
+      devices = {
+        "ben-mob-a52s" = {id = "MC64HZO-56DZZ3L-DIKKO6T-AFHR7R5-EYFB2MJ-YV44EH7-PRUMBZE-PMZI2QA";};
+        "ben-tab-boox" = {id = "MBBQODR-62MERAV-FQV63Q7-FHQENGX-6THMJBO-S5YQ64H-XMLBSPN-YYTR5Q3";};
+      };
+      folders = {
+        "obsidian" = {
+          path = "/home/ben/OneDrive/obsidian";
+          devices = ["ben-mob-a52s" "ben-tab-boox"];
+        };
+      };
+    };
+  };
+  networking.firewall = {
+    enable = true;
+    allowedTCPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      } # KDE Connect
+    ];
+    allowedUDPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      } # KDE Connect
+    ];
+    allowedTCPPorts = [
+      8384 # Syncthing GUI
+      22000 # Syncthing sync
+    ];
+    allowedUDPPorts = [
+      22000 # Syncthing sync
+      21027 # Syncthing discovery
+    ];
+  };
 }

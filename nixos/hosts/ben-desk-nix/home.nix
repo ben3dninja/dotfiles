@@ -53,6 +53,7 @@
     plasma-browser-integration
     discord
     broot
+    kdeconnect
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -269,5 +270,7 @@
       desktop = 0.9;
     };
   };
+
+  services.kdeconnect.enable = true;
   # gtk.enable = false;
 }
